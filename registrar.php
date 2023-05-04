@@ -2,19 +2,18 @@
 
 include("con_db.php");
 
-    
-if (isset($_POST['register'])) {
-    
-    if (strlen($_POST['name']) >= 1 && strlen($_POST['ruc']) >= 1) {
-	    $name = trim($_POST['name']);
-	    $email = trim($_POST['email']);
-	    $fechareg = date("d/m/y");
-		$ruc = trim($_POST['ruc']);
-		$celular = trim($_POST['celular']);
-		$direccion = trim($_POST['direccion']);
-		$fechaentrega = trim($_POST['fecha_entrega']);
+
+
+if (isset($_POST['register'])) {              
+
 		$cantidad = trim($_POST['cantidad']);
 		$producto2 = trim($_POST['producto']);
+        $presentacion2 = trim($_POST['presentacion']);        
+        $descuento2 = trim($_POST['descuento']);
+                
+    
+    if (strlen($_POST['cantidad']) >= 1 && strlen($_POST['producto']) >= 1 ) {	   
+        		
 		switch ($producto2) {
           case triplex:
             $producto2 = "Triplex";
@@ -41,7 +40,7 @@ if (isset($_POST['register'])) {
             $producto2 = $producto2;
             break;
         }
-		$presentacion2 = trim($_POST['presentacion']);
+		
 		switch ($presentacion2) {
           case litro:
             $presentacion2 ="Litro";
@@ -59,8 +58,8 @@ if (isset($_POST['register'])) {
             $presentacion2 = $presentacion2;
             break;
         }
-		$pago = trim($_POST['pago']);
-        $descuento2 = trim($_POST['descuento']);
+		
+        
         switch ($descuento2) {
           case desc25:
             $descuento2 = "25%";
@@ -78,13 +77,13 @@ if (isset($_POST['register'])) {
             $descuento2 = $descuento2;
             break;
         }
+
+
+
         $producto = trim($_POST['producto']);
 		$presentacion = trim($_POST['presentacion']);
         $descuento = trim($_POST['descuento']);
-        $vendedor = trim($_POST['vendedor']);
-        
-        
-        
+        $pago = trim($_POST['pago']);        
         
         
     
@@ -186,12 +185,7 @@ if (isset($_POST['register'])) {
                 }
             break;
     
-    
-    
-    
-    
-    
-    
+        
     
             case desc20:
                 switch ($producto) {
@@ -486,10 +480,7 @@ if (isset($_POST['register'])) {
                 }
             break;
     
-    
-    
-    
-    
+       
     
     
             default:
@@ -497,21 +488,39 @@ if (isset($_POST['register'])) {
             break;
         }
         $iva = $total*0.12;
-        $totalconiva=$total+$iva;
-    	
+        $totalconiva=$total+$iva;    	
     	
         echo "<p class='saludo'>SubTotal $<span id='nombre'>$total</span>  dólares</p>";
         echo "<p class='saludo'>IVA 12% $<span id='nombre'>$iva</span>  dólares</p>";
-        echo "<p class='saludo'>Total $<span id='nombre'>$totalconiva</span>  dólares</p>";
+        echo "<p class='saludo'>Total $<span id='nombre'>$totalconiva</span>  dólares</p>";  
+        /*Este codigo hace que solo si es nuevo pedido aumenta el numero del pedido caso contrario siguen aumentandose al mismo pedido*/
         
+        $consultaped = "SELECT * FROM pedidos";
+        $resultadoped = mysqli_query($conex,$consultaped);
+            while ($row = $resultadoped->fetch_array()) {
+                $numeropedidos[] = $row['numero_pedido'];				
+            }
+        $ultimopedidos = max($numeropedidos);         
+
+        $fechareg = date("d/m/y");
+                
+        $sqlConsulta = "SELECT * FROM `pedidos` WHERE numero_pedido = 0";
+        $rvendedor = mysqli_query($conex,$sqlConsulta);
+        $row = $rvendedor->fetch_array();
+		$nombre_vendedor = $row['vendedor'];
+
+        $sqlConsulta2 = "SELECT * FROM `pedidos` WHERE numero_pedido = 0";
+        $rfecha_entrega = mysqli_query($conex,$sqlConsulta2);
+        $row = $rfecha_entrega->fetch_array();
+		$fecha_de_entrega = $row['fecha_entr'];	    
         
+
+	    $consulta3 = "INSERT INTO pedidos(fecha_reg, fecha_entr, pago, cantidad, producto, presentacion, vendedor, descuento, subtotal, iva, total, numero_pedido) 
+		VALUES ('$fechareg','$fecha_de_entrega','$pago', '$cantidad', '$producto2', '$presentacion2','$nombre_vendedor', '$descuento2', $total, $iva, $totalconiva,$ultimopedidos)"; 
+
+	    $resultado3 = mysqli_query($conex,$consulta3);
         
-        
-	    $consulta = "INSERT INTO pedidos(nombre,email,fecha_reg,ruc,direccion,celular,fecha_entr,pago,cantidad,producto,presentacion,vendedor,descuento,subtotal, iva, total) 
-		VALUES ('$name','$email','$fechareg','$ruc', '$direccion', '$celular', '$fechaentrega','$pago', '$cantidad', '$producto2', '$presentacion2', '$vendedor', '$descuento2', $total, $iva, $totalconiva)";
-	    $resultado = mysqli_query($conex,$consulta);
-		
-	    if ($resultado) {
+	    if ($resultado3) {
 	    	?> 
 	    	<h3 class="ok">¡Pedido registrado correctamente!</h3>
            <?php
@@ -520,13 +529,24 @@ if (isset($_POST['register'])) {
 	    	<h3 class="bad">¡No se ha registrado su pedido!</h3>
            <?php
 	           }
+        
+        
+
     }   else {
     	    	?> 
     	    	<h3 class="bad">¡Por favor complete los campos!</h3>
                <?php
             }
-    
-		
-}
+            ?> 
+            <form class="in-flex" method="post">     
+                <input type="hidden" name="posi" value="0">  
+            <input type="submit" name="pedidos2" value="Agregar más productos">
+        </form>
+        <?php
+ }
+ ?>
 
-?>
+            
+
+  
+
