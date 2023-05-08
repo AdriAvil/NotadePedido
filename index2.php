@@ -34,6 +34,7 @@ $inc = include("con_db.php");
 			<input type="text" name="celular" placeholder="Celular">
 			<input type="text" name="direccion" placeholder="Dirección">		
 			<input type="text" name="fecha_entrega" placeholder="Fecha de entrega"> 
+			<input type="text" name="fecha_pago" placeholder="Fecha de pago"> 
 			<input type="text" name="vendedor" placeholder="Vendedor(a)"> 	
 			<input type="hidden" name="posi" value="1">	
 			<input type="submit" name="pedidos" value="Agregar pedido">
@@ -41,11 +42,13 @@ $inc = include("con_db.php");
     	</form>
 			<?php
 			
+			
 			}
 		
        
 		
-
+			include("pedidos.php");
+			include("registrar.php");
 
         ?>
 </body>

@@ -12,12 +12,12 @@ $inc = include("con_db.php");
 <body>
 		
 
-    <form class="in-flex" method="post">
+    <form action="index2.php"class="in-flex" method="post">
         <img src="https://mastercleaning-ec.com/nota-pedido/img/logoAO.png" style="width:300px">
     	<h1>Nota de Pedido</h1>
     	
 		<form class="in-flex" method="post">       
-		<input type="submit" name="empezar" value="Registrar pedido">
+		<input type="submit" name="empezar" value="Registrar nuevo pedido">
 		
     </form>
         <?php 

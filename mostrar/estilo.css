@@ -11,4 +11,9 @@ h1 {
 
 div {
     padding: 10px 20px;
+	background: #3652;
+}
+
+.titulo-nombre {
+	background: #326132;
 }

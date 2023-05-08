@@ -23,10 +23,11 @@
 				$consulta2 = "INSERT INTO clientes(nombre,email,ruc,direccion,celular, numero_cliente) VALUES ('$name','$email','$ruc', '$direccion', '$celular','$ultimocliente')";
 				$resultado2 = mysqli_query($conex,$consulta2);
 				
-				$fechaentrega = trim($_POST['fecha_entrega']);            
+				$fechaentrega = trim($_POST['fecha_entrega']);
+				$fechapago = trim($_POST['fecha_pago']);              
 				$vendedor = trim($_POST['vendedor']);  
-				$Ingresarvendedor = "INSERT INTO pedidos(fecha_entr,vendedor) VALUES ('$fechaentrega','$vendedor')";
-				$Ingresarvendedor = mysqli_query($conex,$Ingresarvendedor);
+				$sqlIngresarvendedor = "INSERT INTO pedidos(fecha_entr,vendedor,fecha_pago) VALUES ('$fechaentrega','$vendedor',$fechapago)";
+				$Ingresarvendedor = mysqli_query($conex,$sqlIngresarvendedor);
 			}else {
 				?> 
 				<h3 class="bad">¡Por favor complete los campos!</h3>
@@ -62,8 +63,8 @@
 			<option value="metodo">Método de pago</option>
 			<option value="Efectivo">Efectivo</option>
 			<option value="Cheque">Cheque</option>
+			<option value="Transferencia">Transferencia</option>
 			<option value="Electronico">Dinero electronico</option>
-			<option value="Credito">Tarjeta de crédito</option>
 		</select>
 		<select name="descuento">
 			<option value="descuento">Descuento</option>
@@ -100,10 +101,11 @@
 				$consulta2 = "INSERT INTO clientes(nombre,email,ruc,direccion,celular, numero_cliente) VALUES ('$name','$email','$ruc', '$direccion', '$celular','$ultimocliente')";
 				$resultado2 = mysqli_query($conex,$consulta2);
 				
-				$fechaentrega = trim($_POST['fecha_entrega']);            
+				$fechaentrega = trim($_POST['fecha_entrega']);
+				$fechapago = trim($_POST['fecha_pago']);              
 				$vendedor = trim($_POST['vendedor']);  
-				$Ingresarvendedor = "INSERT INTO pedidos(fecha_entr,vendedor) VALUES ('$fechaentrega','$vendedor')";
-				$Ingresarvendedor = mysqli_query($conex,$Ingresarvendedor);
+				$sqlIngresarvendedor = "INSERT INTO pedidos(fecha_entr,vendedor,fecha_pago) VALUES ('$fechaentrega','$vendedor',$fechapago)";
+				$Ingresarvendedor = mysqli_query($conex,$sqlIngresarvendedor);
 			}else {
 				?> 
 				<h3 class="bad">¡Por favor complete los campos!</h3>
