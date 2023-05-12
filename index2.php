@@ -7,12 +7,13 @@ $inc = include("con_db.php");
 	<title>Registrar pedido</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 	<link rel="stylesheet" type="text/css" href="estilo.css">
 </head>
 <body>
 		<?php
 		if (isset($_POST['empezar'])) {
-				$eliminarnumerode = mysqli_query($conex,"DELETE FROM `pedidos` WHERE numero_pedido = 0");
+				/*$eliminarnumerode = mysqli_query($conex,"DELETE FROM `pedidos` WHERE numero_pedido = 0");
 				$eliminarvacios = mysqli_query($conex,"DELETE FROM `pedidos` WHERE total = 0");
 
 				$consulta = "SELECT * FROM pedidos";
@@ -22,30 +23,23 @@ $inc = include("con_db.php");
 				}
 				$ultimopedido = max($numeropedido);
 				$ultimopedidos = $ultimopedido+1;
-				$ingresar_number_pedido = mysqli_query($conex,"INSERT INTO pedidos(numero_pedido) VALUES ($ultimopedidos)");	
+				$ingresar_number_pedido = mysqli_query($conex,"INSERT INTO pedidos(numero_pedido) VALUES ($ultimopedidos)");*/	
 			
 				?>
-		<form class="in-flex" method="post">
-			<img src="https://mastercleaning-ec.com/nota-pedido/img/logoAO.png" style="width:300px">
-			<h1>Nota de Pedido</h1>
-			<input type="text" name="name" placeholder="Nombre cliente">
-			<input type="email" name="email" placeholder="Email">
-			<input type="text" name="ruc" placeholder="RUC">
-			<input type="text" name="celular" placeholder="Celular">
-			<input type="text" name="direccion" placeholder="Dirección">		
-			<input type="text" name="fecha_entrega" placeholder="Fecha de entrega"> 
-			<input type="text" name="fecha_pago" placeholder="Fecha de pago"> 
-			<input type="text" name="vendedor" placeholder="Vendedor(a)"> 	
-			<input type="hidden" name="posi" value="1">	
-			<input type="submit" name="pedidos" value="Agregar pedido">
-			
+		<form class="in-flex" action="index3.php" method="post">
+			<div class="container">
+				<div class="buttons">  
+					<img src="https://mastercleaning-ec.com/nota-pedido/img/logo-blanco-AO.svg" style="width:300px">
+					<h1>Nota de Pedido</h1>
+					<input type="text" name="ruc" placeholder="RUC">
+					<input type="submit" class="btn btn-1" name="buscar_clientes" value="Buscar">
+				</div>
+			</div>
     	</form>
 			<?php
 			
 			
-			}
-		
-       
+			}       
 		
 			include("pedidos.php");
 			include("registrar.php");

@@ -7,8 +7,9 @@ if ($inc) {
 		$consultatamanio = "SELECT * FROM `pedidos`";
 		$resultadotam = mysqli_query($conex,$consultatamanio);
 		$i=1;
+		
 		while($fila = $resultadotam->fetch_array()){
-			$consulta = "SELECT * FROM `clientes` WHERE numero_cliente = $i";
+			$consulta = "SELECT * FROM `clientes_pd` WHERE numero_cliente = $i";
 			$resultado = mysqli_query($conex,$consulta);		
 			if (isset($resultado)) {
 				$row = $resultado->fetch_array();
@@ -43,20 +44,34 @@ if ($inc) {
 				
 								
 
-					$consulta2 = "SELECT id,fecha_reg,fecha_entr,pago,cantidad,producto,presentacion,vendedor,descuento,subtotal,iva,total,numero_pedido,fecha_pago
-					FROM `pedidos` WHERE numero_pedido = $i";
+					$consulta2 = "SELECT *	FROM `pedidos` WHERE numero_pedido = $i";
 					$resultado2 = mysqli_query($conex,$consulta2);	
-					while ($row = $resultado2->fetch_array()){
-						$id = $row['id'];
-						$fechareg = $row['fecha_reg'];
-						$fecha_entrega = $row['fecha_entr'];
+					$row = $resultado2->fetch_array();
+					$fechareg = $row['fecha_reg'];
+					$fecha_entrega = $row['fecha_entr'];
+					$pago = $row['pago'];
+					$numero_pedido = $row['numero_pedido'];	
+					$vendedor = $row['vendedor'];
+					$fecha_de_pago = $row['fecha_pago'];
+					if(isset($fechareg))
+					{
+						?>
+							<div>
+							<b>Fecha: </b> <?php echo $fechareg; ?><br>
+							<b>Fecha de Entrega: </b> <?php echo $fecha_entrega; ?><br>
+							<b>Pago: </b> <?php echo $pago; ?><br>
+							<b>Fecha de Pago: </b> <?php echo $fecha_de_pago; ?><br>
+							<b>Vendedor: </b> <?php echo $vendedor; ?><br>
+							</div>
+
+						<?php
+					
+					}
+					
+					while ($row = $resultado2->fetch_array()){						
 						$cantidad = $row['cantidad'];
 						$producto = $row['producto'];
-						$presentacion = $row['presentacion'];
-						$pago = $row['pago'];
-						$numero_pedido = $row['numero_pedido'];	
-						$vendedor = $row['vendedor'];
-						$fecha_de_pago = $row['fecha_pago'];
+						$presentacion = $row['presentacion'];						
 						$subtotal = $row['subtotal'];
 						$iva = $row['iva'];
 						$total = $row['total'];						
@@ -68,15 +83,11 @@ if ($inc) {
 										<div>
 											<div>
 											
-														<b>ID: </b> <?php echo $id; ?><br>
-														<b>Fecha: </b> <?php echo $fechareg; ?><br>
-														<b>Fecha de Entrega: </b> <?php echo $fecha_entrega; ?><br>
+													
 														<b>Cantidad: </b> <?php echo $cantidad; ?><br>
 														<b>Producto: </b> <?php echo $producto; ?><br>
 														<b>Presentación: </b> <?php echo $presentacion; ?><br>
-														<b>Pago: </b> <?php echo $pago; ?><br>
-														<b>Fecha de Pago: </b> <?php echo $fecha_de_pago; ?><br>
-														<b>Vendedor: </b> <?php echo $vendedor; ?><br>
+														
 														<b>Subtotal: </b> <?php echo "$".$subtotal; ?><br>
 														<b>IVA: </b> <?php echo "$".$iva; ?><br>
 														<b>Total: </b> <?php echo "$".$total; ?><br>
